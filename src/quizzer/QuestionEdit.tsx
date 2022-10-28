@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Question, QuestionType } from "../interfaces/question";
+import { Button, Form } from "react-bootstrap";
+import { Question } from "../interfaces/question";
 
 import "./QuestionEdit.css";
+
+interface userQuestions {
+    index: number,
+    lastIndex: number,
+    question: Question,
+    editQuestion: (id: number, question: Question) => void,
+    removeQuestion: (id: number) => void, 
+    swapQuestion: (idx1: number, idx2: number) => void
+}
 
 export const QuestionEdit = ({
     index,
@@ -10,7 +20,7 @@ export const QuestionEdit = ({
     editQuestion,
     removeQuestion,
     swapQuestion
-}: {}) => {
+}: userQuestions) => {
     const [a, b] = useState<number>(
         question.options.findIndex((s: string) => question.expected === s)
     );
@@ -27,7 +37,7 @@ export const QuestionEdit = ({
         });
     };
 
-    const switchMulti = () => {
+    const switchMulti = () => { //broken, change 
         b(0);
         editQuestion(question.id, {
             ...question,
@@ -111,7 +121,7 @@ export const QuestionEdit = ({
                                 <Form.Select
                                     className="type_dropdown"
                                     value={question.type}
-                                    onChange={handleSwitch}
+                                    onChange={switchMulti}
                                 >
                                     <option
                                         data-testid={
@@ -208,18 +218,14 @@ export const QuestionEdit = ({
                             onClick={() => {
                                 swapQuestion(index, index - 1);
                             }}
-                        >
-                            ▲
-                        </Button>
+                        ></Button>
                         <Button
                             disabled={index === lastIndex}
                             className="swap_button"
                             onClick={() => {
                                 swapQuestion(index, index + 1);
                             }}
-                        >
-                            ▼
-                        </Button>
+                        ></Button>
                     </div>
                 </div>
                 <div className="edit_question_footer">
@@ -242,9 +248,7 @@ export const QuestionEdit = ({
                         onClick={() => {
                             removeQuestion(question.id);
                         }}
-                    >
-                        Delete
-                    </Button>
+                    ></Button>
                 </div>
             </div>
         </>

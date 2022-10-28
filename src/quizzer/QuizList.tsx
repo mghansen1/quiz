@@ -5,12 +5,19 @@ import { QuizCard } from "./QuizCard";
 import "./QuizList.css";
 import { QuizView } from "./QuizView";
 
+interface Qlist {
+    quizzes: Quiz[],
+    editQuiz: (id: number, quiz: Quiz) => void,
+    deleteQuiz: (Id: number) => void,
+    showModal: () => void
+}
+
 export const QuizList = ({
     quizzes,
     editQuiz,
     deleteQuiz,
     showModal
-}: {}) => {
+}: Qlist) => {
     const [displayId, setDisplayId] = useState<null | number>(null);
 
     const handleQuizView = (id: number) => {
@@ -38,18 +45,15 @@ export const QuizList = ({
                 </>
             )}
             {quizzes.map((quiz: Quiz) => {
-                if (displayId === quiz.id) {
-                    return (
-                        <QuizView
-                            key={quiz.id}
-                            quiz={quiz}
-                            editQuiz={editQuiz}
-                            deleteQuiz={deleteQuiz}
-                            resetView={resetQuizView}
-                        ></QuizView>
-                    );
-                }
-            })}
+                if (displayId === quiz.id)
+                     return <QuizView
+                        //key={quiz.id}
+                        quiz={quiz}
+                        editQuiz={editQuiz}
+                        deleteQuiz={deleteQuiz}
+                        resetView={resetQuizView}
+                    ></QuizView>
+                return null})}
         </div>
     );
 };

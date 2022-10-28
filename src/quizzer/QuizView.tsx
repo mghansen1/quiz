@@ -5,12 +5,19 @@ import { QuizEdit } from "./QuizEdit";
 
 import "./QuizView.css";
 
+interface Qview {
+    quiz: Quiz,
+    editQuiz: (qId: number, newQuiz: Quiz) => void,
+    deleteQuiz: (Id: number) => void,
+    resetView: () => void
+}
+
 export const QuizView = ({
     quiz,
     editQuiz,
     deleteQuiz,
     resetView
-}: {}) => {
+}: Qview) => {
     const [edit, setEdit] = useState(false);
 
     const switchEdit = () => {
@@ -21,21 +28,21 @@ export const QuizView = ({
         <div className="quiz_card">
             {edit && (
                 <QuizEdit
-                    quiz={quiz
-                    editQuiz={editQuiz
-                    deleteQuiz={deleteQuiz
-                    switchEdit={switchEdit
-                    resetView={resetView
+                    quiz={quiz}
+                    editQuiz={editQuiz}
+                    deleteQuiz={deleteQuiz}
+                    switchEdit={switchEdit}
+                    resetView={resetView}
                 ></QuizEdit>
             )
-            {!edit && (
+             } {!edit && (
                 <QuizExpanded
-                    quiz={quiz
-                    editQuiz={editQuiz
-                    resetView={resetView
-                    switchEdit={switchEdit
+                    quiz={quiz}
+                    editQuiz={editQuiz}
+                    resetView={resetView}
+                    switchEdit={switchEdit}
                 ></QuizExpanded>
-            )
+             )}
         </div>
     );
-;
+};
